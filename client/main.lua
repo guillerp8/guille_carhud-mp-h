@@ -1,3 +1,6 @@
+-- Guille_CarHud Optimized by VisiBait -> https://github.com/visibait. Original author: guillerp8 -> https://github.com/guillerp8
+
+  
 ESX = nil
 
 Citizen.CreateThread(function() 
@@ -12,10 +15,11 @@ end)
 
 Citizen.CreateThread(function()
     while true do
-        Citizen.Wait(50)
-        local jugador = GetPlayerPed(-1)
+        Citizen.Wait(0)
+        local jugador = PlayerPedId()
+        local sleep = true
         if IsPedInAnyVehicle(jugador) then
-
+            sleep = false
             local vehiculo = GetVehiclePedIsUsing(jugador)
             local velo = (GetEntitySpeed(vehiculo)* 2.236936) -- Relación con km/h http://www.kronzky.info/fivemwiki/index.php?title=GetEntitySpeed
             local gaso = GetVehicleFuelLevel(vehiculo)
@@ -24,8 +28,6 @@ Citizen.CreateThread(function()
             local vida = GetVehicleEngineHealth(vehiculo)
             local coche = IsPedSittingInAnyVehicle(jugador)
 
-        
-            Citizen.Wait(20)
             SendNUIMessage({
                 coche = coche; 
                 vel = velo; 
@@ -39,5 +41,6 @@ Citizen.CreateThread(function()
                 coche = false;
             })
         end
+        if sleep then Citizen.Wait(250) end
     end
 end)
